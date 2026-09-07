@@ -1,0 +1,11 @@
+# Do not commit proprietary bases, extracted trees, keys, or build outputs
+*.apk
+*.apks
+*.xapk
+*.jks
+*.keystore
+.work/
+.local/
+out/
+__pycache__/
+*.pyc
