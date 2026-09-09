@@ -2,6 +2,28 @@
 
 Open tooling for researching and eventually replacing the firmware on the **TP-Link Kasa KP405** outdoor plug-in dimmer without committing TP-Link proprietary APK or firmware binaries to this public repository.
 
+## Non-negotiable design goal: works with no Internet
+
+The open firmware must remain fully controllable when the WAN/Internet is unavailable. Cloud services may be optional conveniences, but they must never be required for basic operation.
+
+Hard requirements:
+
+- physical button always works locally;
+- on/off and dimming work over the local LAN with no Internet connection;
+- direct local Web UI hosted by the KP405;
+- local REST/WebSocket API;
+- local MQTT support and Home Assistant discovery;
+- schedules, timers, scenes, minimum/maximum brightness, and power-on behavior are stored and executed on-device;
+- no login, vendor account, cloud token, or remote server is required for control;
+- if the configured Wi-Fi network is unavailable, the device can expose a recovery/control AP after a configurable delay;
+- loss of DNS, NTP, WAN, or cloud connectivity must not stall the control loop or make the device unresponsive;
+- cached/local timekeeping keeps schedules running through temporary Internet outages, with RTC/time resynchronization when a trusted local or Internet time source returns;
+- cloud integrations, if enabled at all, run as an additive layer over local control rather than sitting in the command path;
+- firmware update checks are never required for normal operation and updates are user-controlled;
+- no telemetry or vendor analytics are necessary for functionality.
+
+A simple architectural rule follows from this: **mains control and dimming must be local-first; networking is an optional control transport, not a dependency.**
+
 ## Current target
 
 - Device family: KP405
